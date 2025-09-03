@@ -1,0 +1,14 @@
+/home/basturk/Escritorio/Don Bosco/Algoritmos/Proyecto_1/stocks_beta/bin/Debug/net8.0/stocks_beta
+/home/basturk/Escritorio/Don Bosco/Algoritmos/Proyecto_1/stocks_beta/bin/Debug/net8.0/stocks_beta.deps.json
+/home/basturk/Escritorio/Don Bosco/Algoritmos/Proyecto_1/stocks_beta/bin/Debug/net8.0/stocks_beta.runtimeconfig.json
+/home/basturk/Escritorio/Don Bosco/Algoritmos/Proyecto_1/stocks_beta/bin/Debug/net8.0/stocks_beta.dll
+/home/basturk/Escritorio/Don Bosco/Algoritmos/Proyecto_1/stocks_beta/bin/Debug/net8.0/stocks_beta.pdb
+/home/basturk/Escritorio/Don Bosco/Algoritmos/Proyecto_1/stocks_beta/obj/Debug/net8.0/stocks_beta.GeneratedMSBuildEditorConfig.editorconfig
+/home/basturk/Escritorio/Don Bosco/Algoritmos/Proyecto_1/stocks_beta/obj/Debug/net8.0/stocks_beta.AssemblyInfoInputs.cache
+/home/basturk/Escritorio/Don Bosco/Algoritmos/Proyecto_1/stocks_beta/obj/Debug/net8.0/stocks_beta.AssemblyInfo.cs
+/home/basturk/Escritorio/Don Bosco/Algoritmos/Proyecto_1/stocks_beta/obj/Debug/net8.0/stocks_beta.csproj.CoreCompileInputs.cache
+/home/basturk/Escritorio/Don Bosco/Algoritmos/Proyecto_1/stocks_beta/obj/Debug/net8.0/stocks_beta.dll
+/home/basturk/Escritorio/Don Bosco/Algoritmos/Proyecto_1/stocks_beta/obj/Debug/net8.0/refint/stocks_beta.dll
+/home/basturk/Escritorio/Don Bosco/Algoritmos/Proyecto_1/stocks_beta/obj/Debug/net8.0/stocks_beta.pdb
+/home/basturk/Escritorio/Don Bosco/Algoritmos/Proyecto_1/stocks_beta/obj/Debug/net8.0/stocks_beta.genruntimeconfig.cache
+/home/basturk/Escritorio/Don Bosco/Algoritmos/Proyecto_1/stocks_beta/obj/Debug/net8.0/ref/stocks_beta.dll

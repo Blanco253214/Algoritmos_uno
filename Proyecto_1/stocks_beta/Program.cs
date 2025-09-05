@@ -30,7 +30,7 @@ namespace beta_stock
         {
             //List<string> stock = new List<string>();
             string nombre = agregarProducto();
-            int numero = agregarCantidadTienda();
+            //int numero = agregarCantidadTienda();
         }
 
         static void mostrarMenu()
@@ -42,21 +42,39 @@ namespace beta_stock
             Console.WriteLine("3 para mostrar el stock completo");
         }
 
+        static bool stringValido(string entrada)
+        //funcion para validar el nombre ingresado.
+        {
+            bool valido = true;
+            if (string.IsNullOrWhiteSpace(entrada))
+            {
+                valido = false;
+            }
+            foreach (char c in entrada)
+            {
+                if (!char.IsLetter(c))
+                {
+                    valido = false;
+                    break;
+                }
+            }
+            return valido;
+        }
+
         static string agregarProducto()
         {
-            int cantidad;
             string entrada;
 
-            Console.WriteLine("Ingrese el nombre del producto");
+            Console.WriteLine("Ingrese el nombre del producto: ");
             entrada = Console.ReadLine();
-            if (int.TryParse(entrada, out cantidad))
+            if (stringValido(entrada))
             {
-                Console.WriteLine("Error, dato ingresado no valido.");
-                Console.WriteLine("Funcionalidad en desarrollo.");
+                Console.WriteLine("El nombure del producto de ha ingresado correctamente!");
             }
             else
             {
-                Console.WriteLine("El item se ingreso correctamente!");
+                Console.WriteLine("Error, intente con un nombre valido.");
+                //hay que hacer una funcion recursiva para que el usuario reingrese
             }
             return entrada;
         }
@@ -75,6 +93,29 @@ namespace beta_stock
                 Console.WriteLine("funcionalidad en desarrollo");
             }
             return cantidad_tienda;
+        }
+
+        static int agregarCantidadBodega()
+        {
+            int cantidad_bodega;
+            Console.WriteLine("Ingrese la cantidad disponible en la bodega");
+            if (int.TryParse(Console.ReadLine(), out cantidad_bodega))
+            {
+                Console.WriteLine($"La cantidad de {cantidad_bodega} se agrego correctamente!");
+            }
+            else
+            {
+                Console.WriteLine("Error! formato ingresado no valido. Intente nuevamente");
+                Console.WriteLine("funcionalidad en desarrollo");
+            }
+            return cantidad_bodega;
+        }
+
+        static void mostrarStock(Item item)
+        {
+            Console.WriteLine($"Nombre: {item.Nombre}");
+            Console.WriteLine($"Cantidad disponible en tienda: {item.Cantidad_disponible}");
+            Console.WriteLine($"Cantidad disponible en bodega: {item.Cantidad_Bodega}");
         }
     }
 }

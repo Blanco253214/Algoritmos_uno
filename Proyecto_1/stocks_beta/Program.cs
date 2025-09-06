@@ -14,11 +14,13 @@ namespace beta_stock
         //cantidad de disponibilidad inmediata (en tienda).
         public int Cantidad_Bodega { get; set; }
         //cantidad disponible en la bodega central.
-        public Item(string nombre, int cant_disponible, int cant_bodega)
+        public int Codigo { get; set; }
+        public Item(string nombre, int cant_disponible, int cant_bodega, int codigo)
         {
             Nombre = nombre;
             Cantidad_disponible = cant_disponible;
             Cantidad_Bodega = cant_bodega;
+            Codigo = codigo;
         }
 
         //get y set significa que se puede leer (get) y escribit: (set) 
@@ -42,6 +44,7 @@ namespace beta_stock
             Console.WriteLine("3 para mostrar el stock completo");
         }
 
+        //VALIDADORES
         static bool stringValido(string entrada)
         //funcion para validar el nombre ingresado.
         {
@@ -60,7 +63,17 @@ namespace beta_stock
             }
             return valido;
         }
+        static bool cantidadValida(int x)
+        {
+            bool cant_valida = false;
+            if (x > 0)
+            {
+                cant_valida = true;
+            }
+            return cant_valida;
+        }
 
+        //FUNCIONES PARA AGREGAR
         static string agregarProducto()
         {
             string entrada;
@@ -73,8 +86,17 @@ namespace beta_stock
             }
             else
             {
+                //se entra aca si el ingreso no fue valido
                 Console.WriteLine("Error, intente con un nombre valido.");
-                //hay que hacer una funcion recursiva para que el usuario reingrese
+                Console.WriteLine("Ingrese un nombre valido: ");
+                entrada = Console.ReadLine();
+                while (!stringValido(entrada))
+                {
+                    Console.WriteLine("Recuerde: no se admiten numeros, espacios vacios o caracteres nulos");
+                    Console.WriteLine("Ingrese un nombre valido: ");
+                    entrada = Console.ReadLine();
+                }
+                Console.WriteLine("El nombre del producto e ingreso correctamente!");
             }
             return entrada;
         }
@@ -83,7 +105,7 @@ namespace beta_stock
         {
             int cantidad_tienda;
             Console.WriteLine("Ingrese la cantidad disponible en la tienda");
-            if (int.TryParse(Console.ReadLine(), out cantidad_tienda))
+            if ((int.TryParse(Console.ReadLine(), out cantidad_tienda)) && cantidadValida(cantidad_tienda))
             {
                 Console.WriteLine($"La cantidad de {cantidad_tienda} se agrego correctamente!");
             }

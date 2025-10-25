@@ -2,142 +2,121 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace beta_stock
 {
-
-    class Item
-    {
-        public string Nombre { get; set; }
-        //nombre del producto.
-        public int Cantidad_disponible { get; set; }
-        //cantidad de disponibilidad inmediata (en tienda).
-        public int Cantidad_Bodega { get; set; }
-        //cantidad disponible en la bodega central.
-        public int Codigo { get; set; }
-        public Item(string nombre, int cant_disponible, int cant_bodega, int codigo)
-        {
-            Nombre = nombre;
-            Cantidad_disponible = cant_disponible;
-            Cantidad_Bodega = cant_bodega;
-            Codigo = codigo;
-        }
-
-        //get y set significa que se puede leer (get) y escribit: (set) 
-    }
-
     class Stock
     {
+        //Creacion del struct item.
+        struct Item
+        {
+            public string Nombre { get; set; }
+            public int Codigo { get; set; }
+            public int CantidadTienda { get; set; }
+            public int CantidadBodega { get; set; }
+            public float Precio { get; set; }
+
+            public override string ToString()
+            {
+                return $"Nombre: {Nombre}, Codigo: {Codigo}, Cantidad en tienda: {CantidadTienda}, Cantidad en bodega: {CantidadBodega}, Precio: {Precio}";
+            }
+        }
+        //Validadores.
+        static bool StringValido(string cadena)
+        {
+            return !string.IsNullOrEmpty(cadena) && cadena.All(char.IsLetter);
+        }
+        static string IngresarNombre()
+        {
+            //string respuesta = "si";
+            Console.WriteLine("ingrese el nombre del producto: ");
+            string Nombre = Console.ReadLine();
+            while (!StringValido(Nombre))
+            {
+                Console.WriteLine("Error! ha ingresado un formato invalido.");
+                Console.WriteLine("Solo se aceptan caracteres alfabeticos.");
+                Console.WriteLine("Ingrese el nombre del producto: ");
+                Nombre = Console.ReadLine();
+            }
+            return Nombre;
+        }
+        static int IngresarCodigo()
+        {
+            int varX;
+            Console.WriteLine("Se admiten hasta 6 numeros.");
+            Console.WriteLine("Ingrese el codigo del item: ");
+            while (!int.TryParse(Console.ReadLine(), out varX) || varX.ToString().Length > 6)
+            {
+                Console.WriteLine("Error! formato invalido, intente nuevamente.");
+                Console.WriteLine("Ingrese el codigo del item: ");
+            }
+            return varX;
+        }
+        static int IngresoCantidad()
+        {
+            int cantidad;
+            Console.WriteLine("Ingrese la cantidad deseada: ");
+            while (int.TryParse(Console.ReadLine(), out cantidad))
+            {
+                Console.WriteLine("Error, ingreso invalido. Intente nuevamente");
+                Console.WriteLine("Ingrese la cantidad deseada: ");
+            }
+            return cantidad;
+        }
+        static float IngresoPrecio()
+        {
+            float precioItem;
+            Console.WriteLine("Ingrese el precio del producto: ");
+            while (float.TryParse(Console.ReadLine(), out precioItem))
+            {
+                Console.WriteLine("Error, ingreso invalido. Intente nuevamente");
+                Console.WriteLine("Ingrese el precio del item: ");
+            }
+            return precioItem;
+        }
+        //Funciones.
+        static void CrearStock(string ruta)
+        {
+            try
+            {
+                using (var wt = new StreamWriter(ruta, append: true, Encoding.UTF8 ))
+                {
+                    string reingreso = "si";
+                    do
+                    {
+                        //Creacion del struct
+                        string nombreProducto = IngresarNombre();
+                        int codigo = IngresarCodigo();
+                        int cantTienda = IngresoCantidad();
+                        int cantBodega = IngresoCantidad();
+                        float precioReal = IngresoPrecio();
+                        Item nuevo = new Item
+                        {
+                            Nombre = nombreProducto,
+                            Codigo = codigo,
+                            CantidadTienda = cantBodega,
+                            CantidadBodega = cantBodega,
+                            Precio = precioReal
+
+                        };
+                        //se escribe en el archivo.
+                        wt.WriteLine(nuevo);
+                        Console.WriteLine("Desea seguir ingresando items? ");
+                        reingreso = (Console.ReadLine() ?? "").Trim().ToLowerInvariant();
+                    } while (reingreso == "si");
+                    Console.WriteLine("Items ingresados correctamente.");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error al guardar los empleados: " + e.Message);
+            }
+        }
         static void Main(string[] args)
         {
-            //List<string> stock = new List<string>();
-            string nombre = agregarProducto();
-            //int numero = agregarCantidadTienda();
-        }
-
-        static void mostrarMenu()
-        {
-            Console.WriteLine("MENU PARA EL STOCK!");
-            Console.WriteLine("Elija la opcion que desea ingresar");
-            Console.WriteLine("1 para ingresar un item al stock");
-            Console.WriteLine("2 para buscar un item en el stock");
-            Console.WriteLine("3 para mostrar el stock completo");
-        }
-
-        //VALIDADORES
-        static bool stringValido(string entrada)
-        //funcion para validar el nombre ingresado.
-        {
-            bool valido = true;
-            if (string.IsNullOrWhiteSpace(entrada))
-            {
-                valido = false;
-            }
-            foreach (char c in entrada)
-            {
-                if (!char.IsLetter(c))
-                {
-                    valido = false;
-                    break;
-                }
-            }
-            return valido;
-        }
-        static bool cantidadValida(int x)
-        {
-            bool cant_valida = false;
-            if (x > 0)
-            {
-                cant_valida = true;
-            }
-            return cant_valida;
-        }
-
-        //FUNCIONES PARA AGREGAR
-        static string agregarProducto()
-        {
-            string entrada;
-
-            Console.WriteLine("Ingrese el nombre del producto: ");
-            entrada = Console.ReadLine();
-            if (stringValido(entrada))
-            {
-                Console.WriteLine("El nombure del producto de ha ingresado correctamente!");
-            }
-            else
-            {
-                //se entra aca si el ingreso no fue valido
-                Console.WriteLine("Error, intente con un nombre valido.");
-                Console.WriteLine("Ingrese un nombre valido: ");
-                entrada = Console.ReadLine();
-                while (!stringValido(entrada))
-                {
-                    Console.WriteLine("Recuerde: no se admiten numeros, espacios vacios o caracteres nulos");
-                    Console.WriteLine("Ingrese un nombre valido: ");
-                    entrada = Console.ReadLine();
-                }
-                Console.WriteLine("El nombre del producto e ingreso correctamente!");
-            }
-            return entrada;
-        }
-
-        static int agregarCantidadTienda()
-        {
-            int cantidad_tienda;
-            Console.WriteLine("Ingrese la cantidad disponible en la tienda");
-            if ((int.TryParse(Console.ReadLine(), out cantidad_tienda)) && cantidadValida(cantidad_tienda))
-            {
-                Console.WriteLine($"La cantidad de {cantidad_tienda} se agrego correctamente!");
-            }
-            else
-            {
-                Console.WriteLine("Error! formato ingresado no valido. Intente nuevamente");
-                Console.WriteLine("funcionalidad en desarrollo");
-            }
-            return cantidad_tienda;
-        }
-
-        static int agregarCantidadBodega()
-        {
-            int cantidad_bodega;
-            Console.WriteLine("Ingrese la cantidad disponible en la bodega");
-            if (int.TryParse(Console.ReadLine(), out cantidad_bodega))
-            {
-                Console.WriteLine($"La cantidad de {cantidad_bodega} se agrego correctamente!");
-            }
-            else
-            {
-                Console.WriteLine("Error! formato ingresado no valido. Intente nuevamente");
-                Console.WriteLine("funcionalidad en desarrollo");
-            }
-            return cantidad_bodega;
-        }
-
-        static void mostrarStock(Item item)
-        {
-            Console.WriteLine($"Nombre: {item.Nombre}");
-            Console.WriteLine($"Cantidad disponible en tienda: {item.Cantidad_disponible}");
-            Console.WriteLine($"Cantidad disponible en bodega: {item.Cantidad_Bodega}");
+            
         }
     }
 }

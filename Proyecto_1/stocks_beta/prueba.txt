@@ -1,0 +1,1 @@
+﻿Nombre: tornillo, Codigo: 1, Cantidad en tienda: 3000, Cantidad en bodega: 3000, Precio: 30
